@@ -1,0 +1,145 @@
+using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEngine.UI.Image;
+
+public class PlayerController : MonoBehaviour
+{
+
+    [Header("Refrences")]
+    [SerializeField] private InputHandler playerInput;
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private Collider Feet;
+    private Rigidbody _rb;
+
+    [Header("Player Sittings")]
+    
+    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float sprintSpeed = 10f;
+    [SerializeField] private float jumpForce = 5f;
+    private float _currentSpeed => playerInput.SprintTriggered ? sprintSpeed : walkSpeed;
+
+    private bool isGrounded;
+
+
+    private Vector3 _moveVelocity;
+    private float turnSmooth;
+
+    [Header("Attack Settings")]
+    [SerializeField] private float attackCooldown = 1f;
+    enum AttackState { None, Attack1, Attack2 }
+
+    private AttackState attackState;
+    private float attackTimer;
+
+    enum PlayerState { Idle, Walking, Sprinting, Jumping, Attacking }
+    private PlayerState playerState;
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        CheckGrounded();
+        HandleAttackTimer();
+
+        if (isGrounded && playerInput.attackTriggered)
+        { 
+            playerInput.ConsumeAttack();
+            Attack();
+        }
+    }
+
+
+    void FixedUpdate()
+    {
+        MovePlayer();
+        Jump();
+    }
+
+    void MovePlayer()
+    {
+        Vector2 moveInput = playerInput.MovementInput;
+
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 direction = forward * moveInput.y + right * moveInput.x;
+        
+        if (moveInput != Vector2.zero)
+        {
+            direction.Normalize();
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmooth, 0.1f);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            _moveVelocity = direction * _currentSpeed;
+            _rb.linearVelocity = _moveVelocity + new Vector3(0f, _rb.linearVelocity.y, 0f);
+        }
+        else
+        {
+            _rb.linearVelocity = new Vector3(0f, _rb.linearVelocity.y, 0f);
+        }
+    }
+
+    void Jump()
+    {
+        if (playerInput.JumpTriggered && isGrounded)
+        {
+            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    void Attack()
+    {
+
+        if (attackState == AttackState.None)
+        {
+            Debug.Log("Attack 1");
+            attackState = AttackState.Attack1;
+            attackTimer = 0f;
+        }
+        else if (attackState == AttackState.Attack1)
+        {
+            Debug.Log("Attack 2");
+            // Perform second attack
+            attackState = AttackState.Attack2;
+            attackTimer = 0f;
+        }
+    }
+
+    void HandleAttackTimer()
+    {
+        if (attackState != AttackState.None)
+        {
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackCooldown)
+            {
+                attackState = AttackState.None;
+                attackTimer = 0f;
+            }
+        }
+    }
+
+    void CheckGrounded()
+    {
+        Vector3 origin = new Vector3(Feet.bounds.center.x,Feet.bounds.min.y + 0.1f,Feet.bounds.center.z);
+        isGrounded = Physics.BoxCast(origin,Feet.bounds.extents,Vector3.down,Quaternion.identity,0.2f,LayerMask.GetMask("Ground"));
+
+    }
+}
