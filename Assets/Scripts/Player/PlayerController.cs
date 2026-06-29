@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.UI.Image;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputHandler playerInput;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Collider Feet;
+    [SerializeField] private Animator animator;
     private Rigidbody _rb;
 
     [Header("Player Sittings")]
@@ -18,15 +20,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
     private float _currentSpeed => playerInput.SprintTriggered ? sprintSpeed : walkSpeed;
+    
 
-    private bool isGrounded;
-
+    [SerializeField]private bool isGrounded;
+    [SerializeField]public bool isAttacking;
 
     private Vector3 _moveVelocity;
     private float turnSmooth;
+    [SerializeField] private float animationSpeed;
 
     [Header("Attack Settings")]
-    [SerializeField] private float attackCooldown = 1f;
+    [SerializeField] private float attackCooldown = 1.5f;
     enum AttackState { None, Attack1, Attack2 }
 
     private AttackState attackState;
@@ -50,6 +54,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animationSpeed = playerInput.MovementInput.magnitude * _currentSpeed;
+        animator.SetFloat("Speed", animationSpeed);
+        animator.SetBool("Grounded", isGrounded);
+        animator.SetFloat("Velocity", _rb.linearVelocity.y);
+
         CheckGrounded();
         HandleAttackTimer();
 
@@ -58,6 +67,8 @@ public class PlayerController : MonoBehaviour
             playerInput.ConsumeAttack();
             Attack();
         }
+
+
     }
 
 
@@ -69,6 +80,9 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
+        if (isAttacking) {
+            return;
+        }
         Vector2 moveInput = playerInput.MovementInput;
 
         Vector3 forward = cameraTransform.forward;
@@ -101,26 +115,34 @@ public class PlayerController : MonoBehaviour
     {
         if (playerInput.JumpTriggered && isGrounded)
         {
-            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            animator.SetTrigger("Jump");
+            StartCoroutine(OnJumpAnimationEventDelay());
         }
+    }
+
+    IEnumerator OnJumpAnimationEventDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     void Attack()
     {
-
         if (attackState == AttackState.None)
         {
             Debug.Log("Attack 1");
+            animator.SetTrigger("NormalAttack");
             attackState = AttackState.Attack1;
             attackTimer = 0f;
         }
         else if (attackState == AttackState.Attack1)
         {
             Debug.Log("Attack 2");
-            // Perform second attack
+            animator.SetTrigger("SpinAttack");
             attackState = AttackState.Attack2;
             attackTimer = 0f;
         }
+        
     }
 
     void HandleAttackTimer()
@@ -140,6 +162,9 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 origin = new Vector3(Feet.bounds.center.x,Feet.bounds.min.y + 0.1f,Feet.bounds.center.z);
         isGrounded = Physics.BoxCast(origin,Feet.bounds.extents,Vector3.down,Quaternion.identity,0.2f,LayerMask.GetMask("Ground"));
-
+        if (isGrounded)
+        {
+            _rb.linearVelocity = Vector3.zero;
+        }
     }
 }
