@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Collider Feet;
     [SerializeField] private Animator animator;
+    [SerializeField] private Damageable Damageable;
     private Rigidbody _rb;
 
     [Header("Player Sittings")]
@@ -36,12 +37,11 @@ public class PlayerController : MonoBehaviour
     private AttackState attackState;
     private float attackTimer;
 
-    enum PlayerState { Idle, Walking, Sprinting, Jumping, Attacking }
-    private PlayerState playerState;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        Damageable = GetComponent<Damageable>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", animationSpeed);
         animator.SetBool("Grounded", isGrounded);
         animator.SetFloat("Velocity", _rb.linearVelocity.y);
+        animator.SetBool("IsDead", Damageable.IsDead);
 
         CheckGrounded();
         HandleAttackTimer();
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        if (isAttacking) {
+        if (isAttacking || Damageable.IsDead || !isGrounded) {
             return;
         }
         Vector2 moveInput = playerInput.MovementInput;
@@ -124,6 +125,10 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        if (_rb.linearVelocity.y < 0f)
+        {
+            _rb.linearVelocity += Vector3.up * Physics.gravity.y * 4 * Time.fixedDeltaTime;
+        }
     }
 
     void Attack()

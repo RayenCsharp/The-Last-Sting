@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bf82fdeefdaa5064181893739673ee3f
+guid: 19ff339b17f603046a8250d332487a78
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|Scorpion_Falling
-      takeName: Armature|Scorpion_Falling
-      internalID: 5454027591934564203
+      name: Armature|Ant_Attack
+      takeName: Armature|Ant_Attack
+      internalID: -3188207637388955059
       firstFrame: 0
-      lastFrame: 4
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -60,47 +60,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Scorpion_Idle
-      takeName: Armature|Scorpion_Idle
-      internalID: 2529694838469104961
-      firstFrame: 1
-      lastFrame: 39
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|Scorpion_Jump
-      takeName: Armature|Scorpion_Jump
-      internalID: 2389385442935858316
+      name: Armature|Ant_Chase
+      takeName: Armature|Ant_Chase
+      internalID: 9137885949697769347
       firstFrame: 0
-      lastFrame: 11
+      lastFrame: 27
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -118,11 +89,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Scorpion_Land
-      takeName: Armature|Scorpion_Land
-      internalID: -4086095873364516241
+      name: Armature|Ant_Death
+      takeName: Armature|Ant_Death
+      internalID: -3971714626409055384
       firstFrame: 0
-      lastFrame: 10
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -147,11 +118,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Scorpion_NormalAttack
-      takeName: Armature|Scorpion_NormalAttack
-      internalID: 2180995298928419205
+      name: Armature|Ant_Hit
+      takeName: Armature|Ant_Hit
+      internalID: 2122060090824043384
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -176,69 +147,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Scorpion_Run
-      takeName: Armature|Scorpion_Run
-      internalID: 6902276760777713547
-      firstFrame: 1
-      lastFrame: 17
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|Scorpion_SpinningAttack
-      takeName: Armature|Scorpion_SpinningAttack
-      internalID: -5201762047991202587
+      name: Armature|Ant_Idle
+      takeName: Armature|Ant_Idle
+      internalID: -3936089871911813827
       firstFrame: 0
-      lastFrame: 25
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature|Scorpion_Walk
-      takeName: Armature|Scorpion_Walk
-      internalID: 6191210668570780349
-      firstFrame: 1
-      lastFrame: 39
+      lastFrame: 27
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

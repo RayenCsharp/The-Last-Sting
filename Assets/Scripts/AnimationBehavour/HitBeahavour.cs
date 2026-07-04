@@ -1,28 +1,16 @@
 using UnityEngine;
 
-public class AttackBehavour : StateMachineBehaviour
+public class HitBeahavour : StateMachineBehaviour
 {
-    private PlayerController controller;
-    private EnemyController enemyController;
-    [SerializeField] private bool isPlayer;
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    private Damageable damageable;
+
+    //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (isPlayer)
+        damageable = animator.GetComponentInParent<Damageable>();
+        if (damageable != null)
         {
-            if (controller == null)
-            {
-                controller = animator.GetComponentInParent<PlayerController>();
-            }
-            controller.isAttacking = true;
-        }
-        else
-        {
-            if (enemyController == null)
-            {
-                enemyController = animator.GetComponentInParent<EnemyController>();
-            }
-            enemyController.IsAttacking = true;
+            damageable.IsHit = true;
         }
     }
 
@@ -35,14 +23,7 @@ public class AttackBehavour : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (isPlayer)
-        {
-            controller.isAttacking = false;
-        }
-        else
-        {
-            enemyController.IsAttacking = false;
-        }
+        damageable.IsHit = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
