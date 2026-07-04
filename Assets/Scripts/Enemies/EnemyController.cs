@@ -116,7 +116,7 @@ public class EnemyController : MonoBehaviour
 
     void ReturnMode()
     {
-        if (enemyState == EnemyState.Attack || enemyState == EnemyState.Chase) 
+        if (enemyState == EnemyState.Attack || enemyState == EnemyState.Chase)
             return;
         if (Vector3.Distance(transform.position, initialPosition) > 0.1f)
         {
@@ -126,15 +126,16 @@ public class EnemyController : MonoBehaviour
             _rb.MovePosition(transform.position + returnDirection * enemySpeed * Time.deltaTime);
             Quaternion lookDirection = Quaternion.LookRotation(returnDirection);
             _rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookDirection, Time.deltaTime * 5f));
+            if (Quaternion.Angle(transform.rotation, initialRotation) > 0.1f && Vector3.Distance(transform.position, initialPosition) <= 1f)
+            {
+                _rb.MoveRotation(Quaternion.Slerp(transform.rotation, initialRotation, Time.deltaTime * 5f));
+            }
         }
         else
         {
             enemyState = EnemyState.Idle;
         }
-        if (Quaternion.Angle(transform.rotation, initialRotation) > 0.1f)
-        {
-            _rb.MoveRotation(Quaternion.Slerp(transform.rotation, initialRotation, Time.deltaTime * 5f));
-        }
     }
+        
 
 }

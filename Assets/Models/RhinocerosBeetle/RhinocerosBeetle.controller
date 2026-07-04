@@ -60,8 +60,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ant_Attack
-  m_Speed: 0.7
+  m_Name: Rhinoceros_Attack
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7518362699353857351}
@@ -278,7 +278,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 1
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.8125
   m_HasExitTime: 1
@@ -362,7 +362,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 1
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.625
   m_HasExitTime: 1
@@ -410,7 +410,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2241ff06e05fa0947a4d91c8c1896cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathBehavour
-  type: 1
+  type: 3
+  Fruits:
+  - {fileID: 7446290286741061588, guid: f7efa3fa3a9e2f74a924b76d8557fce5, type: 3}
+  - {fileID: 6317545683682917038, guid: fe903a74417890348826e810c1ca28e1, type: 3}
+  healthFruitDropChance: 0
+  poisonFruitDropChance: 100
 --- !u!114 &4713043603745844336
 MonoBehaviour:
   m_ObjectHideFlags: 1

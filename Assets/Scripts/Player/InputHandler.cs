@@ -13,15 +13,19 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private string Jump = "Jump";
     [SerializeField] private string Sprint = "Sprint";
     [SerializeField] private string NormalAttack = "NormalAttack";
+    [SerializeField] private string StingAttack = "StingAttack";
 
     private InputAction movementAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
     private InputAction normalAttackAction;
+    private InputAction stingAttackAction;
 
     public Vector2 MovementInput { get; private set; }
 
     public bool attackTriggered { get; private set; }
+
+    public bool stingAttackTriggered { get; private set; }
 
     public bool JumpTriggered { get; private set; }
 
@@ -34,6 +38,7 @@ public class InputHandler : MonoBehaviour
         jumpAction = playerController.FindActionMap(actionMapName).FindAction(Jump);
         sprintAction = playerController.FindActionMap(actionMapName).FindAction(Sprint);
         normalAttackAction = playerController.FindActionMap(actionMapName).FindAction(NormalAttack);
+        stingAttackAction = playerController.FindActionMap(actionMapName).FindAction(StingAttack);
         SubscribeActionValuesToInputEvents();
     }
 
@@ -49,6 +54,8 @@ public class InputHandler : MonoBehaviour
 
         sprintAction.performed += inputInfo => SprintTriggered = true;
         sprintAction.canceled += inputInfo => SprintTriggered = false;
+
+        stingAttackAction.performed += inputInfo => stingAttackTriggered = true;
     }
 
     private void OnEnable()
@@ -64,5 +71,10 @@ public class InputHandler : MonoBehaviour
     public void ConsumeAttack()
     {
         attackTriggered = false;
+    }
+
+    public void ConsumeStingAttack()
+    {
+        stingAttackTriggered = false;
     }
 }

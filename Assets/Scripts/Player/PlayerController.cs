@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.UI.Image;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour
@@ -21,7 +20,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 10f;
     [SerializeField] private float jumpForce = 5f;
     private float _currentSpeed => playerInput.SprintTriggered ? sprintSpeed : walkSpeed;
-    
+
+    [SerializeField] private float maxPoisen = 100f; // maximum poisen value (exposed in the Inspector)
+    private float poisen;
+    public float Poisen // property for current poisen, with a getter and a private setter
+    {
+        get => poisen;
+        private set => poisen = Mathf.Max(0f, value);
+    }
+
 
     [SerializeField]private bool isGrounded;
     [SerializeField]public bool isAttacking;
@@ -32,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Attack Settings")]
     [SerializeField] private float attackCooldown = 1.5f;
-    enum AttackState { None, Attack1, Attack2 }
+    enum AttackState { None, Attack1, Attack2, StingAttack }
 
     private AttackState attackState;
     private float attackTimer;
@@ -62,11 +69,29 @@ public class PlayerController : MonoBehaviour
 
         CheckGrounded();
         HandleAttackTimer();
-
+        if (isGrounded && playerInput.stingAttackTriggered && Poisen > 0f) 
+        {
+            Debug.Log("Sting Attack Triggered");
+            playerInput.ConsumeStingAttack();
+            StingAttack();
+        }
+        else if (isGrounded && playerInput.stingAttackTriggered && Poisen <= 0f)
+        {
+            Debug.Log("Not enough poisen for sting attack");
+            playerInput.ConsumeStingAttack();
+        }
+        else
+        {
+            playerInput.ConsumeStingAttack();
+        }
         if (isGrounded && playerInput.attackTriggered)
-        { 
+        {
             playerInput.ConsumeAttack();
             Attack();
+        }
+        else
+        {
+            playerInput.ConsumeAttack();
         }
 
 
@@ -150,6 +175,18 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    void StingAttack()
+    {
+        if (attackState == AttackState.None)
+        {
+            Debug.Log("Sting Attack");
+            animator.SetTrigger("StingAttack");
+            attackState = AttackState.StingAttack;
+            attackTimer = 0f;
+            poisen -= 10f; // reduce poisen by 10 for each sting attack
+        }
+    }
+
     void HandleAttackTimer()
     {
         if (attackState != AttackState.None)
@@ -170,6 +207,26 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             _rb.linearVelocity = Vector3.zero;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PoisenPickUp"))
+        {
+            poisen += 50f;
+            poisen = Mathf.Min(poisen, maxPoisen); // clamp poisen to maximum value
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("HpPickUp"))
+        {
+            Damageable.Heal(20f);
+            Destroy(other.gameObject);
+        }
+        else if (other.CompareTag("LegendaryPickUp"))
+        {
+            Damageable.Heal(100f);
+            Destroy(other.gameObject);
         }
     }
 }

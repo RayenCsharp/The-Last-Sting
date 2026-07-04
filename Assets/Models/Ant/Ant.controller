@@ -209,7 +209,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 1
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.8125
   m_HasExitTime: 1
@@ -329,6 +329,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathBehavour
   type: 1
+  Fruits:
+  - {fileID: 7446290286741061588, guid: f7efa3fa3a9e2f74a924b76d8557fce5, type: 3}
+  - {fileID: 6317545683682917038, guid: fe903a74417890348826e810c1ca28e1, type: 3}
+  healthFruitDropChance: 100
+  poisonFruitDropChance: 0
 --- !u!1101 &4004367558069627773
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -405,7 +410,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 1
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.625
   m_HasExitTime: 1

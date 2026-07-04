@@ -1,10 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DeathBehavour : StateMachineBehaviour
 {
-    enum objectType { Player, Enemy, Boss }
+    enum objectType { Player, Ant, LadyBug, Rhinoceros, Boss }
     [SerializeField] private objectType type;
     private GameObject gameObject;
+    [SerializeField] private List<GameObject> Fruits = new List<GameObject>();
+    [SerializeField] private float healthFruitDropChance;
+    [SerializeField] private float poisonFruitDropChance;
 
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -25,6 +29,7 @@ public class DeathBehavour : StateMachineBehaviour
         gameObject = animator.transform.parent.gameObject;
         if ( gameObject != null)
         {
+            DropChance();
             Destroy(gameObject);
         }
     }
@@ -40,4 +45,24 @@ public class DeathBehavour : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
+
+    void DropChance()
+    {
+        float randomValue = Random.value; // Generate a random value between 0 and 1
+
+        float healthChance = healthFruitDropChance / 100f;
+        float poisonChance = poisonFruitDropChance / 100f;
+        if (randomValue <= healthChance)
+        {
+            // Drop health fruit
+            Instantiate(Fruits[0], gameObject.transform.position, Quaternion.identity);
+        }
+        else if (randomValue <= healthChance + poisonChance)
+        {
+            // Drop poison fruit
+            Instantiate(Fruits[1], gameObject.transform.position, Quaternion.identity);
+        }
+    }
+
+
 }

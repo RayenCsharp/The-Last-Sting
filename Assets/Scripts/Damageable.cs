@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private ParticleSystem poisonParticles;
 
     // backing field for current health (not exposed in the Inspector)
     private float health;
@@ -30,7 +32,7 @@ public class Damageable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void TakeDamage(float damage)
@@ -48,13 +50,46 @@ public class Damageable : MonoBehaviour
         }
     }
 
+    public void PoisenDamage(float damage, float duration)
+    {
+        if (!IsDead)
+        {
+            StartCoroutine(CoroutinePoisenDamage(damage, duration));
+        }
+        else
+        {
+            StopCoroutine(CoroutinePoisenDamage(damage, duration));
+        }
+    }
+
+    IEnumerator CoroutinePoisenDamage(float damage, float duration)
+    {
+        poisonParticles.Play();
+        float elapsedTime = 0f;
+        while (elapsedTime < duration && !IsDead)
+        {
+            TakeDamage(damage);
+            yield return new WaitForSeconds(1f);
+            elapsedTime += 1f;
+        }
+        poisonParticles.Stop();
+    }
+
+    public void Heal(float amount)
+    {
+        if (!IsDead)
+        {
+            Health += amount;
+            Health = Mathf.Min(Health, maxHealth);
+            Debug.Log($"{gameObject.name} healed {amount}. Current health: {Health}");
+        }
+    }
+
     void Die()
     {
-        // Handle death logic here (e.g., play animation, disable object, etc.)
         Debug.Log($"{gameObject.name} has died.");
         // perform Death animation
         animator.SetTrigger("Death");
-        //Destroy(gameObject);
-        // disable the object
     }
+    
 }

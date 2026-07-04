@@ -5,6 +5,8 @@ public class Attack : MonoBehaviour
 {
     [SerializeField] private LayerMask targets;
     [SerializeField] private float damage;
+    [SerializeField] private float duration;
+    [SerializeField] private bool isPoisonous;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,7 +15,14 @@ public class Attack : MonoBehaviour
             Damageable damageable = other.GetComponent<Damageable>();
             if (damageable != null)
             {
-                damageable.TakeDamage(damage);
+                if (isPoisonous)
+                {
+                    damageable.PoisenDamage(damage, duration);
+                }
+                else
+                {
+                    damageable.TakeDamage(damage);
+                }
             }
         }
     }
