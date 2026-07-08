@@ -4,7 +4,9 @@ public class AttackBehavour : StateMachineBehaviour
 {
     private PlayerController controller;
     private EnemyController enemyController;
+    private BossController bossController;
     [SerializeField] private bool isPlayer;
+    [SerializeField] private bool isBoss;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -15,6 +17,13 @@ public class AttackBehavour : StateMachineBehaviour
                 controller = animator.GetComponentInParent<PlayerController>();
             }
             controller.isAttacking = true;
+        }else if (isBoss)
+        {
+            if (bossController == null)
+            {
+                bossController = animator.GetComponentInParent<BossController>();
+            }
+            bossController.IsAttacking = true;
         }
         else
         {
@@ -38,6 +47,9 @@ public class AttackBehavour : StateMachineBehaviour
         if (isPlayer)
         {
             controller.isAttacking = false;
+        }else if (isBoss)
+        {
+            bossController.IsAttacking = false;
         }
         else
         {

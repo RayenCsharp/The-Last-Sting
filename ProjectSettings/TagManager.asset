@@ -7,6 +7,7 @@ TagManager:
   - HpPickUp
   - PoisenPickUp
   - LegendaryPickUp
+  - SoundEffect
   layers:
   - Default
   - TransparentFX
@@ -17,9 +18,9 @@ TagManager:
   - Ground
   - Player
   - Enemy
-  - 
-  - 
-  - 
+  - Boss
+  - Tree
+  - Wall
   - 
   - 
   - 

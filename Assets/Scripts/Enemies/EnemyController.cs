@@ -51,7 +51,7 @@ public class EnemyController : MonoBehaviour
             canMove = true;
         }
         AttackMode();
-        animator.SetBool("Chase", enemyState == EnemyState.Chase);
+        animator.SetBool("Chase", enemyState == EnemyState.Chase || enemyState == EnemyState.Return);
     }
 
     void FixedUpdate()
@@ -72,6 +72,11 @@ public class EnemyController : MonoBehaviour
         if (detectionZone.detectedColliders.Count > 0)
         {
             enemyState = EnemyState.Chase;
+            if (detectionZone.detectedColliders[0] == null)
+            {
+                enemyState = EnemyState.Return;
+                return;
+            }
             target = detectionZone.detectedColliders[0].transform;
             Vector3 targetDirection = target.position - transform.position;
             targetDirection.y = 0;
@@ -125,6 +130,8 @@ public class EnemyController : MonoBehaviour
             returnDirection.y = 0;
             _rb.MovePosition(transform.position + returnDirection * enemySpeed * Time.deltaTime);
             Quaternion lookDirection = Quaternion.LookRotation(returnDirection);
+            lookDirection.x = 0;
+            lookDirection.z = 0;
             _rb.MoveRotation(Quaternion.Slerp(transform.rotation, lookDirection, Time.deltaTime * 5f));
             if (Quaternion.Angle(transform.rotation, initialRotation) > 0.1f && Vector3.Distance(transform.position, initialPosition) <= 1f)
             {

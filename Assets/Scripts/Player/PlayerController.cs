@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider Feet;
     [SerializeField] private Animator animator;
     [SerializeField] private Damageable Damageable;
+    [SerializeField] private UiManeger uiManeger;
+    [SerializeField] private AudioSource audioSource;
     private Rigidbody _rb;
 
     [Header("Player Sittings")]
@@ -44,18 +46,21 @@ public class PlayerController : MonoBehaviour
     private AttackState attackState;
     private float attackTimer;
 
-
+    [Header("Sounds Refrences")]
+    [SerializeField] private AudioClip healthPickUp;
+    [SerializeField] private AudioClip poisenPickUp;
+    [SerializeField] private AudioClip legendaryPickUp;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         Damageable = GetComponent<Damageable>();
+        audioSource = GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<AudioSource>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
     }
 
     // Update is called once per frame
@@ -66,6 +71,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Grounded", isGrounded);
         animator.SetFloat("Velocity", _rb.linearVelocity.y);
         animator.SetBool("IsDead", Damageable.IsDead);
+        uiManeger.UpdatePoisen(Poisen, maxPoisen);
 
         CheckGrounded();
         HandleAttackTimer();
@@ -202,31 +208,35 @@ public class PlayerController : MonoBehaviour
 
     void CheckGrounded()
     {
-        Vector3 origin = new Vector3(Feet.bounds.center.x,Feet.bounds.min.y + 0.1f,Feet.bounds.center.z);
-        isGrounded = Physics.BoxCast(origin,Feet.bounds.extents,Vector3.down,Quaternion.identity,0.2f,LayerMask.GetMask("Ground"));
-        if (isGrounded)
-        {
-            _rb.linearVelocity = Vector3.zero;
-        }
+        isGrounded = Physics.CheckBox(
+            Feet.bounds.center,
+            Feet.bounds.extents,
+            Quaternion.identity,
+            LayerMask.GetMask("Ground")
+        );
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PoisenPickUp"))
         {
-            poisen += 50f;
-            poisen = Mathf.Min(poisen, maxPoisen); // clamp poisen to maximum value
             Destroy(other.gameObject);
+            audioSource.PlayOneShot(poisenPickUp);
+            poisen += 40f;
+            poisen = Mathf.Min(poisen, maxPoisen); // clamp poisen to maximum value
+            
         }
         else if (other.CompareTag("HpPickUp"))
         {
-            Damageable.Heal(20f);
             Destroy(other.gameObject);
+            audioSource.PlayOneShot(healthPickUp);
+            Damageable.Heal(20f);
         }
         else if (other.CompareTag("LegendaryPickUp"))
         {
-            Damageable.Heal(100f);
             Destroy(other.gameObject);
+            audioSource.PlayOneShot(legendaryPickUp);
+            Damageable.Heal(100f);
         }
     }
 }

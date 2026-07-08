@@ -14,6 +14,7 @@ AnimatorState:
   - {fileID: 2866569848455240185}
   m_StateMachineBehaviours:
   - {fileID: 2841513927742581828}
+  - {fileID: 8687781502141075618}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -67,6 +68,7 @@ AnimatorState:
   - {fileID: 7518362699353857351}
   m_StateMachineBehaviours:
   - {fileID: 4713043603745844336}
+  - {fileID: -861189306419900187}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -218,6 +220,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-861189306419900187
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1a136fae66297429c42c803d2bb3b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundBehavour
+  soundEffect: {fileID: 8300000, guid: c8173766ebf03c8438b6742129222403, type: 3}
+  audioSource: {fileID: 0}
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -429,6 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackBehavour
   isPlayer: 0
+  isBoss: 0
 --- !u!1102 &5389462056311077593
 AnimatorState:
   serializedVersion: 6
@@ -443,6 +460,7 @@ AnimatorState:
   - {fileID: 1247977954380187008}
   m_StateMachineBehaviours:
   - {fileID: 3487619695207881544}
+  - {fileID: 8859699692041231567}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -504,3 +522,31 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &8687781502141075618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1a136fae66297429c42c803d2bb3b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundBehavour
+  soundEffect: {fileID: 8300000, guid: 167a10f201d630b4d8c960200d055d40, type: 3}
+  audioSource: {fileID: 0}
+--- !u!114 &8859699692041231567
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1a136fae66297429c42c803d2bb3b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundBehavour
+  soundEffect: {fileID: 8300000, guid: 3eb2794669af77c4698f698f2932e3fe, type: 3}
+  audioSource: {fileID: 0}

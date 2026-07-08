@@ -5,6 +5,12 @@ public class Damageable : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private ParticleSystem poisonParticles;
+    [SerializeField] private GameManeger gameManeger;
+    [SerializeField] private UiManeger uiManeger;
+
+    enum holders { Player, Ant, LadyBug, Rhinoceros, Boss }
+    [SerializeField] private holders holder;
+    [SerializeField] private int scoreValue;
 
     // backing field for current health (not exposed in the Inspector)
     private float health;
@@ -18,10 +24,6 @@ public class Damageable : MonoBehaviour
     public bool IsHit;
 
     [SerializeField] private Animator animator;
-    [SerializeField] private bool Player;
-    [SerializeField] private bool Tank;
-    [SerializeField] private bool Boss;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,21 +34,27 @@ public class Damageable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (holder == holders.Player)
+        {
+            uiManeger.UpdateHealth(Health, maxHealth);
+        }
     }
 
     public void TakeDamage(float damage)
     {
         if (!IsDead)
         {
-            health -= damage;
+            Health -= damage;
             Debug.Log($"{gameObject.name} took {damage} damage. Current health: {Health}");
 
             if (Health <= 0)
             {
                 Die();
             }
-            animator.SetTrigger("Hit");
+            if (holder != holders.Boss)
+            {
+                animator.SetTrigger("Hit");
+            }
         }
     }
 
@@ -90,6 +98,14 @@ public class Damageable : MonoBehaviour
         Debug.Log($"{gameObject.name} has died.");
         // perform Death animation
         animator.SetTrigger("Death");
+        if (holder == holders.Player || holder == holders.Boss)
+        {
+            gameManeger.GameOver();
+        }
+        else
+        {
+            gameManeger.AddScore(scoreValue);
+        }
     }
     
 }

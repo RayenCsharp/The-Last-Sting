@@ -6,10 +6,18 @@ public class PickUp : MonoBehaviour
     [SerializeField] private float verticalAmplitude = 0.2f;
     [SerializeField] private float verticalFrequency = 4f;
 
-    // Update is called once per frame
+    private Vector3 startPosition;
+
+    void Start()
+    {
+        startPosition = transform.position;
+    }
+
     void Update()
     {
         transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-        transform.position = new Vector3(transform.position.x, Mathf.Sin(Time.time * verticalFrequency) * verticalAmplitude + 1f, transform.position.z);
+
+        transform.position = startPosition +
+            Vector3.up * Mathf.Sin(Time.time * verticalFrequency) * verticalAmplitude;
     }
 }
