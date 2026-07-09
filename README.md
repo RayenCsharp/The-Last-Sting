@@ -3,7 +3,7 @@
 A 3D third-person action game developed in **Unity 6** for the **Made To Be Played**.
 
 > **Game Jam:** Made To Be Played  
-> **Jam Page:** [<Link>](https://itch.io/jam/made-to-be-played)
+> **Jam Page:** [https://itch.io/jam/made-to-be-played]
 
 ---
 
@@ -77,22 +77,22 @@ git clone https://github.com/<YOUR_USERNAME>/<REPOSITORY_NAME>.git
 ## Assets & Credits
 
 ### 3D Assets
-- War FX — Jean Moreno — [<Link>](https://assetstore.unity.com/packages/vfx/particles/war-fx-5669)
-- Roadside Tales Free - Modular Fence Narrative Pack — EmacEArt — [<Link>](https://assetstore.unity.com/packages/3d/environments/landscapes/roadside-tales-free-modular-fence-narrative-pack-133601)
-- Low Poly Game Ready History Village — BAS Game Asset — [<Link>](https://assetstore.unity.com/packages/3d/environments/historic/low-poly-game-ready-history-village-207553)
-- 4K Realistic Outdoor Materials — Shaded Spectrum — [<Link>](https://assetstore.unity.com/packages/2d/textures-materials/4k-realistic-outdoor-materials-295565)
-- Polygon Trees — Alebrijes Studio — [<Link>](https://assetstore.unity.com/packages/3d/vegetation/trees/polygon-trees-224068)
+- War FX — Jean Moreno — [https://assetstore.unity.com/packages/vfx/particles/war-fx-5669]
+- Roadside Tales Free - Modular Fence Narrative Pack — EmacEArt — [https://assetstore.unity.com/packages/3d/environments/landscapes/roadside-tales-free-modular-fence-narrative-pack-133601]
+- Low Poly Game Ready History Village — BAS Game Asset — [https://assetstore.unity.com/packages/3d/environments/historic/low-poly-game-ready-history-village-207553]
+- 4K Realistic Outdoor Materials — Shaded Spectrum — [https://assetstore.unity.com/packages/2d/textures-materials/4k-realistic-outdoor-materials-295565]
+- Polygon Trees — Alebrijes Studio — [https://assetstore.unity.com/packages/3d/vegetation/trees/polygon-trees-224068]
 
 ### Sound Effects
-- All sond effects from [<Link>](https://pixabay.com/)
+- All sond effects from [https://pixabay.com/]
 Some Sounds are modified by me to fill my purpose
 
 ### Music
-- Great One's Nightmare - Music inspired by Bloodborne [Epic Choir Bossfight Music] — DragonClef — [<Link>](https://www.youtube.com/watch?v=ydZhfSH3qQo&list=RDydZhfSH3qQo&start_radio=1)
-- Emotional Fantasy Piano Music (For Videos) - "Enchanted" by Keys Of Moon 🇺🇸 — BreakingCopyright — Royalty Free Music — [<Link>](https://www.youtube.com/watch?v=HS6lu3NGRJY&list=RDHS6lu3NGRJY&start_radio=1)
+- Great One's Nightmare - Music inspired by Bloodborne [Epic Choir Bossfight Music] — DragonClef — [https://www.youtube.com/watch?v=ydZhfSH3qQo&list=RDydZhfSH3qQo&start_radio=1]
+- Emotional Fantasy Piano Music (For Videos) - "Enchanted" by Keys Of Moon 🇺🇸 — BreakingCopyright — Royalty Free Music — [https://www.youtube.com/watch?v=HS6lu3NGRJY&list=RDHS6lu3NGRJY&start_radio=1]
 
 ### Fonts
-- Alegreya SC — [<Link>](https://fonts.google.com/specimen/Alegreya+SC)
+- Alegreya SC — [https://fonts.google.com/specimen/Alegreya+SC]
 
 Special thanks to all creators whose assets helped make this project possible.
 
@@ -123,7 +123,7 @@ This project represents an important milestone in my journey as a game developer
 
 **Rayen Hidri**
 
-GitHub: https://github.com/<YOUR_USERNAME>
+GitHub: [https://github.com/RayenCsharp]
 
 ---
 
